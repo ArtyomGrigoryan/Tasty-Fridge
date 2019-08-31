@@ -168,12 +168,12 @@ class EditFoodViewController: UIViewController {
     @objc func foodImageViewTapped(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "Источник фотографии", message: nil, preferredStyle: .actionSheet)
         
-        let cameraAction = UIAlertAction(title: "Камера", style: .default) { (action) in
-            self.chooseImagePickerAction(source: .camera)
+        let cameraAction = UIAlertAction(title: "Камера", style: .default) { [weak self] (_) in
+            self?.chooseImagePickerAction(source: .camera)
         }
         
-        let photoLibAction = UIAlertAction(title: "Фото", style: .default) { (action) in
-            self.chooseImagePickerAction(source: .photoLibrary)
+        let photoLibAction = UIAlertAction(title: "Фото", style: .default) { [weak self] (_) in
+            self?.chooseImagePickerAction(source: .photoLibrary)
         }
         
         let cancelAction = UIAlertAction(title: "Отмена", style: .default)

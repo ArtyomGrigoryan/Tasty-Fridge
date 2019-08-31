@@ -31,7 +31,7 @@ class FoodCategoryDetailTableViewController: UITableViewController {
         
         foodCategoryDetailViewModel.sectionListSubject.bind(to: tableView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
         
-        tableView.rx.itemDeleted.subscribe(onNext: {
+        tableView.rx.itemDeleted.subscribe(onNext: { [weak self] in
             if let foodName = foodCategoryDetailViewModel.checkSelectedFoodForPresenceInTheFridge(indexPath: $0) {
                 let alertController = UIAlertController(title: "\(String(describing: foodName))",
                     message: "невозможно удалить, так как он добавлен в холодильник",
@@ -39,14 +39,14 @@ class FoodCategoryDetailTableViewController: UITableViewController {
                 let closeAction = UIAlertAction(title: "Закрыть", style: .default)
                 alertController.addAction(closeAction)
                 
-                self.present(alertController, animated: true, completion: nil)
+                self?.present(alertController, animated: true, completion: nil)
             } else {
-                guard let foodCategoryDetailViewModel = self.foodCategoryDetailViewModel else { return }
+                guard let foodCategoryDetailViewModel = self?.foodCategoryDetailViewModel else { return }
                 foodCategoryDetailViewModel.removeFoodFromApplication(at: $0)
             }
         }).disposed(by: disposeBag)
         
-        tableView.rx.itemSelected.subscribe(onNext: { indexPath in
+        tableView.rx.itemSelected.subscribe(onNext: { [weak self] (indexPath) in
             if let foodName = foodCategoryDetailViewModel.checkSelectedFoodForPresenceInTheFridge(indexPath: indexPath) {
                 //если выбранный пользователем продукт уже имеется в холодильнике, то выдадим соответствующее сообщение
                 let alertController = UIAlertController(title: "\(String(describing: foodName))",
@@ -54,11 +54,11 @@ class FoodCategoryDetailTableViewController: UITableViewController {
                     preferredStyle: .alert)
                 let closeAction = UIAlertAction(title: "Закрыть", style: .default)
                 alertController.addAction(closeAction)
-                self.tableView.deselectRow(at: indexPath, animated: true)
-                self.present(alertController, animated: true, completion: nil)
+                self?.tableView.deselectRow(at: indexPath, animated: true)
+                self?.present(alertController, animated: true, completion: nil)
             } else {
                 //если отсутствует, то перейдем к контроллеру добавления продукта в холодильник
-                self.performSegue(withIdentifier: "showAddFoodControllerSegue", sender: nil)
+                self?.performSegue(withIdentifier: "showAddFoodControllerSegue", sender: nil)
             }
         }).disposed(by: disposeBag)
     }
@@ -67,7 +67,8 @@ class FoodCategoryDetailTableViewController: UITableViewController {
         return RxTableViewSectionedAnimatedDataSource(
             animationConfiguration: AnimationConfiguration(insertAnimation: .automatic, reloadAnimation: .automatic, deleteAnimation: .left), configureCell:
             { (_, tableView, indexPath, food) in
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodCategoryDetailTableViewCell.cellIdentifier, for: indexPath) as? FoodCategoryDetailTableViewCell else { return UITableViewCell() }
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodCategoryDetailTableViewCell.cellIdentifier,
+                                                               for: indexPath) as? FoodCategoryDetailTableViewCell else { return UITableViewCell() }
                 cell.foodCategoryDetailCellViewModel = FoodTableViewCellViewModel(foodModel: food)
                 return cell
             }
@@ -77,7 +78,10 @@ class FoodCategoryDetailTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let identifier = segue.identifier, let foodCategoryDetailViewModel = foodCategoryDetailViewModel else { return }
+        guard
+            let identifier = segue.identifier,
+            let foodCategoryDetailViewModel = foodCategoryDetailViewModel
+        else { return }
         
         if identifier == "showAddFoodControllerSegue" {
             if let dvc = segue.destination as? AddFoodViewController {

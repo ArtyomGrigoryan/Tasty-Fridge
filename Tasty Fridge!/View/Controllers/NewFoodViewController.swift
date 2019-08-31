@@ -22,6 +22,8 @@ class NewFoodViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     var fridgeViewModel: FridgeCollectionViewViewModelType?
+    private let loadingView = UIView()
+    private let activityIndicator = UIActivityIndicatorView()
     private var disposeBag = DisposeBag()
     private var datePicker: UIDatePicker?
     private var foodCategoryPicker: FoodCategoryPicker!
@@ -117,11 +119,11 @@ class NewFoodViewController: UIViewController {
         enableBarButton.bind(to: saveNewFoodBarButtonItem.rx.isEnabled).disposed(by: self.disposeBag)
         
         saveNewFoodBarButtonItem.rx.tap.subscribe(onNext: { [weak self] _ in
-            guard let self = self,
-                let fridgeViewModel = self.fridgeViewModel,
+            guard
+                let self = self,
                 let image = self.foodImageView.image,
                 let imageData = image.jpeg(.lowest)
-                else { return }
+            else { return }
             
             self.foodNameTextField.rx.text.bind(to: foodViewModel.foodName).disposed(by: self.disposeBag)
             
@@ -139,7 +141,8 @@ class NewFoodViewController: UIViewController {
                 self.foodQuantityTextField.rx.text.bind(to: foodViewModel.foodQuantity).disposed(by: self.disposeBag)
                 
                 foodViewModel.saveNewFood(fridgeViewModel: fridgeViewModel, foodImageData: imageData)
-                self.dismiss(animated: true)
+                
+                self.performSegue(withIdentifier: "unwindSegueToFoodCategoriesVC", sender: self)
             }
         }).disposed(by: disposeBag)
     }
@@ -163,19 +166,19 @@ class NewFoodViewController: UIViewController {
             let imagePicker = UIImagePickerController()
             imagePicker.sourceType = source
             imagePicker.delegate = self
-            self.present(imagePicker, animated: true)
+            present(imagePicker, animated: true)
         }
     }
     
     @objc func foodImageViewTapped(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "Источник фотографии", message: nil, preferredStyle: .actionSheet)
         
-        let cameraAction = UIAlertAction(title: "Камера", style: .default) { (action) in
-            self.chooseImagePickerAction(source: .camera)
+        let cameraAction = UIAlertAction(title: "Камера", style: .default) { [weak self] (_) in
+            self?.chooseImagePickerAction(source: .camera)
         }
         
-        let photoLibAction = UIAlertAction(title: "Фото", style: .default) { (action) in
-            self.chooseImagePickerAction(source: .photoLibrary)
+        let photoLibAction = UIAlertAction(title: "Фото", style: .default) { [weak self] (_) in
+            self?.chooseImagePickerAction(source: .photoLibrary)
         }
         
         let cancelAction = UIAlertAction(title: "Отмена", style: .default)
@@ -184,7 +187,7 @@ class NewFoodViewController: UIViewController {
         alertController.addAction(photoLibAction)
         alertController.addAction(cancelAction)
         
-        self.present(alertController, animated: true)
+        present(alertController, animated: true)
     }
     
     @objc func kbDidShow(notification: Notification) {

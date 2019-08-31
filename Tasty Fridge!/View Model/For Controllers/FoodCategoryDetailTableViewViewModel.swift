@@ -15,7 +15,10 @@ class FoodCategoryDetailTableViewViewModel: FoodCategoryDetailTableViewViewModel
     private let foodCategoryId: Int16
     
     func checkSelectedFoodForPresenceInTheFridge(indexPath: IndexPath?) -> String? {
-        guard let sections = try? sectionListSubject.value(), let indexPath = indexPath else { return nil }
+        guard
+            let sections = try? sectionListSubject.value(),
+            let indexPath = indexPath
+        else { return nil }
         
         selectedIndexPath = indexPath
         
@@ -46,7 +49,10 @@ class FoodCategoryDetailTableViewViewModel: FoodCategoryDetailTableViewViewModel
     }
     
     func getViewModelForSelectedFood() -> FoodViewModel? {
-        guard let selectedIndexPath = selectedIndexPath, let sections = try? sectionListSubject.value() else { return nil }
+        guard
+            let selectedIndexPath = selectedIndexPath,
+            let sections = try? sectionListSubject.value()
+        else { return nil }
         let currentSection = sections[selectedIndexPath.section]
         let food = currentSection.items[selectedIndexPath.row]
         

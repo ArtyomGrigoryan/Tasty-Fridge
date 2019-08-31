@@ -97,7 +97,7 @@ class AddFoodViewController: UIViewController {
         enableBarButton.bind(to: addFoodToFridgeBarButton.rx.isEnabled).disposed(by: self.disposeBag)
         
         addFoodToFridgeBarButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            guard let self = self, let fridgeViewModel = self.fridgeViewModel  else { return }
+            guard let self = self, let fridgeViewModel = self.fridgeViewModel else { return }
             
             self.foodQuantityTypeTextField.rx.text.bind(to: foodViewModel.foodQuantityType).disposed(by: self.disposeBag)
             self.foodShelfLifeTextField.rx.text.bind(to: foodViewModel.foodShelfLife).disposed(by: self.disposeBag)

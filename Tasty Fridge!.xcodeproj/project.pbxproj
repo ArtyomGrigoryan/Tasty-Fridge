@@ -57,6 +57,7 @@
 		2B7ECCF8226CD1A200924D2E /* SearchFoodsTableViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7ECCF7226CD1A200924D2E /* SearchFoodsTableViewViewModel.swift */; };
 		2B7ECCFB226CD31D00924D2E /* FoodCategories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B7ECCFA226CD31D00924D2E /* FoodCategories.plist */; };
 		2B7ECCFD226CD32400924D2E /* Foods.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B7ECCFC226CD32300924D2E /* Foods.plist */; };
+		2BA5BF2B231AA82500F88A02 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5BF2A231AA82500F88A02 /* NotificationService.swift */; };
 		3D5CCDD296F1E29C6E51A1EA /* Pods_Tasty_Fridge_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC30E21D7B9FCED6D9B38EE /* Pods_Tasty_Fridge_.framework */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +114,7 @@
 		2B7ECCF7226CD1A200924D2E /* SearchFoodsTableViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFoodsTableViewViewModel.swift; sourceTree = "<group>"; };
 		2B7ECCFA226CD31D00924D2E /* FoodCategories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FoodCategories.plist; sourceTree = "<group>"; };
 		2B7ECCFC226CD32300924D2E /* Foods.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Foods.plist; sourceTree = "<group>"; };
+		2BA5BF2A231AA82500F88A02 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		ADBA69E67F68307668D72830 /* Pods-Tasty Fridge!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tasty Fridge!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tasty Fridge!/Pods-Tasty Fridge!.debug.xcconfig"; sourceTree = "<group>"; };
 		CFC30E21D7B9FCED6D9B38EE /* Pods_Tasty_Fridge_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tasty_Fridge_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFEC2105959D3C5C46DF72B7 /* Pods-Tasty Fridge!.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tasty Fridge!.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tasty Fridge!/Pods-Tasty Fridge!.release.xcconfig"; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				2B7ECC9D226CC81F00924D2E /* TextValidator.swift */,
 				2B7ECC9F226CC84100924D2E /* DateFunctions.swift */,
 				2B7ECCA1226CC87000924D2E /* CoreDataHelper.swift */,
+				2BA5BF2A231AA82500F88A02 /* NotificationService.swift */,
 				2B2E4472227B53130052B6A5 /* DeviceModelChecker.swift */,
 			);
 			path = Helpers;
@@ -453,6 +456,7 @@
 				2B7ECCE1226CCFA500924D2E /* FoodCategoryDetailTableViewController.swift in Sources */,
 				2B7ECCF0226CD0F700924D2E /* FoodCategoriesTableViewViewModel.swift in Sources */,
 				2B7ECCD4226CCE4200924D2E /* FoodCategoryDetailTableViewCell.swift in Sources */,
+				2BA5BF2B231AA82500F88A02 /* NotificationService.swift in Sources */,
 				2B7ECCC3226CCB4300924D2E /* UpdateFoodDetailPopOverDelegate.swift in Sources */,
 				2B7ECC89226CC38500924D2E /* Tasty_Fridge_.xcdatamodeld in Sources */,
 				2B7ECCCB226CCD7F00924D2E /* FoodTableViewCellViewModelType.swift in Sources */,

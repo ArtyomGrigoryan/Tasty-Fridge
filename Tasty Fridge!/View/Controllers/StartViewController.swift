@@ -16,7 +16,8 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+            guard let self = self else { return }
             self.performSegue(withIdentifier: "openFridgeDoorSegue", sender: self)
             self.playSound()
         })

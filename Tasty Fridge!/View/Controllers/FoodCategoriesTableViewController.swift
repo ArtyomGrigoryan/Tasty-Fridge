@@ -28,13 +28,13 @@ class FoodCategoriesTableViewController: UITableViewController {
         
         foodCategoriesViewModel.foodCategories
             .bind(to: tableView.rx.items(cellIdentifier: FoodCategoryTableViewCell.cellIdentifier, cellType: FoodCategoryTableViewCell.self))
-            { row, food, cell in
-                guard let foodCategoriesViewModel = self.foodCategoriesViewModel else { return }
+            { [weak self] (row, food, cell) in
+                guard let self = self, let foodCategoriesViewModel = self.foodCategoriesViewModel else { return }
                 cell.foodCategoryCellViewModel = foodCategoriesViewModel.cellViewModel(forRow: row)
             }.disposed(by: disposeBag)
         
-        tableView.rx.itemSelected.subscribe(onNext: { indexPath in
-            guard let foodCategoriesViewModel = self.foodCategoriesViewModel else { return }
+        tableView.rx.itemSelected.subscribe(onNext: { [weak self] (indexPath) in
+            guard let self = self, let foodCategoriesViewModel = self.foodCategoriesViewModel else { return }
             foodCategoriesViewModel.selectRow(atIndexPath: indexPath)
             self.performSegue(withIdentifier: "showFoodsInSelectedCategorySegue", sender: nil)
         }).disposed(by: disposeBag)
@@ -47,7 +47,10 @@ class FoodCategoriesTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let identifier = segue.identifier, let foodCategoriesViewModel = foodCategoriesViewModel else { return }
+        guard
+            let identifier = segue.identifier,
+            let foodCategoriesViewModel = foodCategoriesViewModel
+        else { return }
         
         if identifier == "showFoodsInSelectedCategorySegue" {
             guard let dvc = segue.destination as? FoodCategoryDetailTableViewController else { return }
@@ -56,8 +59,10 @@ class FoodCategoriesTableViewController: UITableViewController {
         }
         
         if identifier == "showNewFoodControllerSegue" {
-            let navigationViewController = segue.destination as! UINavigationController
-            guard let destinationViewController = navigationViewController.topViewController as? NewFoodViewController else { return }
+            guard
+                let navigationViewController = segue.destination as? UINavigationController,
+                let destinationViewController = navigationViewController.topViewController as? NewFoodViewController
+            else { return }
             destinationViewController.fridgeViewModel = fridgeViewModel
         }
         
@@ -67,4 +72,6 @@ class FoodCategoriesTableViewController: UITableViewController {
             dvc.fridgeViewModel = fridgeViewModel
         }
     }
+    
+    @IBAction func unwindFromNewFood(segue:UIStoryboardSegue) {}
 }

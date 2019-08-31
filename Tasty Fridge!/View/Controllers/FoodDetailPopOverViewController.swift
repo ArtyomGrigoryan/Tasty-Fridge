@@ -45,8 +45,7 @@ class FoodDetailPopOverViewController: UIViewController, UpdateFoodDetailPopOver
         }
         
         editFoodButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            self.performSegue(withIdentifier: "showEditFoodViewSegue", sender: nil)
+            self?.performSegue(withIdentifier: "showEditFoodViewSegue", sender: nil)
         }).disposed(by: disposeBag)
     }
     
@@ -60,9 +59,10 @@ class FoodDetailPopOverViewController: UIViewController, UpdateFoodDetailPopOver
         guard let identifier = segue.identifier, let foodViewModel = foodViewModel else { return }
         
         if identifier == "showEditFoodViewSegue" {
-            let navigationViewController = segue.destination as! UINavigationController
-            
-            guard let destinationViewController = navigationViewController.topViewController as? EditFoodViewController else { return }
+            guard
+                let navigationViewController = segue.destination as? UINavigationController,
+                let destinationViewController = navigationViewController.topViewController as? EditFoodViewController
+            else { return }
             
             destinationViewController.foodViewModel = foodViewModel
             destinationViewController.foodCellDelegate = foodCellDelegate

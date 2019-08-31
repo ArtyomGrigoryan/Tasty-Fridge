@@ -19,13 +19,15 @@ class FoodViewModel: FoodViewModelType {
     var foodQuantityType: BehaviorRelay<String?>
     
     private var newFoodModel: Food?
+    private let notification = NotificationService()
     
     func saveNewFood(fridgeViewModel: FridgeCollectionViewViewModelType, foodImageData: Data) {
         CoreDataHelper.sharedInstance.saveNewFood(foodName: foodName.value!, foodQuantity: Int16(foodQuantity.value!)!,
                                                   foodQuantityType: foodQuantityType.value!,
                                                   foodShelfLife: getDateFromString(foodDate: foodShelfLife.value!),
-                                                  foodImageData: foodImageData, foodCategoryId: Int16(foodCategoryId.value!)!,
-                                                  fridgeViewModel: fridgeViewModel)
+                                                  foodImageData: foodImageData, foodCategoryId: Int16(foodCategoryId.value!)!)
+        
+        notification.scheduleNotification(foodShelfLife: getDateFromString(foodDate: foodShelfLife.value!), foodName: foodName.value!)
         
         fridgeViewModel.sectionListSubject.onNext([SectionOfFoods(header: "", items: CoreDataHelper.sharedInstance.fetchFoodsThatsInTheFridgeNow())])
     }
@@ -35,6 +37,8 @@ class FoodViewModel: FoodViewModelType {
                                                       foodQuantity: Int16(foodQuantity.value!)!,
                                                       foodQuantityType: foodQuantityType.value!,
                                                       foodShelfLife: getDateFromString(foodDate: foodShelfLife.value!))
+        
+        notification.scheduleNotification(foodShelfLife: getDateFromString(foodDate: foodShelfLife.value!), foodName: foodName.value!)
         
         fridgeViewModel.sectionListSubject.onNext([SectionOfFoods(header: "", items: CoreDataHelper.sharedInstance.fetchFoodsThatsInTheFridgeNow())])
     }
@@ -47,6 +51,8 @@ class FoodViewModel: FoodViewModelType {
                                                                 foodCategoryId: Int16(foodCategoryId.value!)!,
                                                                 foodShelfLife: getDateFromString(foodDate: foodShelfLife.value!),
                                                                 foodImageData: foodImageData)
+        
+        notification.scheduleNotification(foodShelfLife: getDateFromString(foodDate: foodShelfLife.value!), foodName: foodName.value!)
     }
     
     func getUpdatedFoodViewModel() -> FoodViewModel {

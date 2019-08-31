@@ -14,10 +14,10 @@ import RxDataSources
 class FridgeCollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate {
     private var fridgeViewModel: FridgeCollectionViewViewModelType?
     private let disposeBag = DisposeBag()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         fridgeViewModel = FridgeCollectionViewViewModel()
         
         guard let fridgeViewModel = fridgeViewModel else { return }
@@ -29,18 +29,19 @@ class FridgeCollectionViewController: UICollectionViewController, UIGestureRecog
         lpgr.delaysTouchesBegan = true
         
         collectionView.dataSource = nil
+        collectionView.bounces = false
         collectionView.addGestureRecognizer(lpgr)
         
         customizeUI()
         
         fridgeViewModel.sectionListSubject.bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
         
-        collectionView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
+        collectionView.rx.itemSelected.subscribe(onNext: { [weak self] (indexPath) in
             guard
                 let self = self,
                 let fridgeViewModel = self.fridgeViewModel,
                 let cell = self.collectionView.cellForItem(at: indexPath) as? FridgeCollectionViewCell
-                else { return }
+            else { return }
             
             guard let foodDetailPopOverViewController = self.storyboard?.instantiateViewController(withIdentifier: "foodDetailPopOverViewController") as? FoodDetailPopOverViewController else { return }
             foodDetailPopOverViewController.foodCellDelegate = cell

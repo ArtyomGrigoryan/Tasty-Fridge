@@ -18,7 +18,7 @@ class SearchFoodsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         searchFoodViewModel = SearchFoodsTableViewViewModel()
         
         guard let searchFoodViewModel = self.searchFoodViewModel else { return }
@@ -36,7 +36,7 @@ class SearchFoodsTableViewController: UITableViewController {
         tableView.dataSource = nil
         tableView.rowHeight = searchFoodViewModel.customizeUI()
         
-        searchController.searchBar.rx.text.orEmpty.subscribe(onNext: { query in
+        searchController.searchBar.rx.text.orEmpty.subscribe(onNext: { (query) in
             if query.isEmpty {
                 searchFoodViewModel.shownFoods.onNext([])
             } else {
@@ -45,12 +45,12 @@ class SearchFoodsTableViewController: UITableViewController {
         }).disposed(by: disposeBag)
         
         searchFoodViewModel.shownFoods.bind(to: tableView.rx.items(cellIdentifier: FoundFoodTableViewCell.cellIdentifier, cellType: FoundFoodTableViewCell.self))
-        { _, food, cell in
+        { (_, food, cell) in
             cell.foundFoodCellViewModel = searchFoodViewModel.cellViewModel(forRow: food.name!)
         }.disposed(by: disposeBag)
         
-        tableView.rx.itemSelected.subscribe(onNext: { indexPath in
-            guard let searchFoodViewModel = self.searchFoodViewModel else { return }
+        tableView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
+            guard let self = self, let searchFoodViewModel = self.searchFoodViewModel else { return }
             
             if let foodName = searchFoodViewModel.checkSelectedFoodForPresenceInTheFridge(atIndexPath: indexPath) {
                 let alertController = UIAlertController(title: "\(String(describing: foodName))",

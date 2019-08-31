@@ -12,13 +12,53 @@ import CoreData
 class CoreDataHelper: NSObject {
     static let sharedInstance = CoreDataHelper()
     
+    private override init() {}
+    
+    func saveNewFood(foodName: String, foodQuantity: Int16, foodQuantityType: String, foodShelfLife: Date, foodImageData: Data, foodCategoryId: Int16) {
+        let context = managedObjectContext()
+        let food = Food(context: context)
+
+        food.name = foodName.trimmingCharacters(in: .whitespacesAndNewlines).capitalized
+        food.quantityType = foodQuantityType
+        food.foodCategoryId = foodCategoryId
+        food.shelfLife = foodShelfLife
+        food.isInTheFridgeNow = true
+        food.quantity = foodQuantity
+        food.image = foodImageData
+
+        do {
+            try context.save()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func fetchFoodsThatsInTheFridgeNow() -> [Food] {
+        let context = managedObjectContext()
+        let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        var foods: [Food] = []
+    
+        fetchRequest.predicate = NSPredicate(format: "isInTheFridgeNow == YES")
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        do {
+            foods = try context.fetch(fetchRequest)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        return foods
+    }
+    
     func getFoodCategoryName(foodCategoryId: Int16) -> String? {
+        let context = managedObjectContext()
         let fetchRequest: NSFetchRequest<FoodCategory> = FoodCategory.fetchRequest()
         
         fetchRequest.predicate = NSPredicate(format: "id == %@", foodCategoryId as NSNumber)
         
         do {
-            let selectedCategory = try managedObjectContext().fetch(fetchRequest)[0]
+            let selectedCategory = try context.fetch(fetchRequest)[0]
             return selectedCategory.name!
         } catch let error {
             print(error.localizedDescription)
@@ -28,28 +68,12 @@ class CoreDataHelper: NSObject {
     }
     
     func fetchAllFoods() -> [Food] {
+        let context = managedObjectContext()
         let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
         var foods: [Food] = []
         
         do {
-            foods = try managedObjectContext().fetch(fetchRequest)
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        
-        return foods
-    }
-    
-    func fetchFoodsThatsInTheFridgeNow() -> [Food] {
-        let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
-        var foods: [Food] = []
-        
-        fetchRequest.predicate = NSPredicate(format: "isInTheFridgeNow == YES")
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        do {
-            foods = try managedObjectContext().fetch(fetchRequest)
+            foods = try context.fetch(fetchRequest)
         } catch let error {
             print(error.localizedDescription)
         }
@@ -58,6 +82,7 @@ class CoreDataHelper: NSObject {
     }
     
     func fetchFoodCategories() -> [FoodCategory] {
+        let context = managedObjectContext()
         let fetchRequest: NSFetchRequest<FoodCategory> = FoodCategory.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
         var foodCategories: [FoodCategory] = []
@@ -65,7 +90,7 @@ class CoreDataHelper: NSObject {
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
-            foodCategories = try managedObjectContext().fetch(fetchRequest)
+            foodCategories = try context.fetch(fetchRequest)
         } catch let error {
             print(error.localizedDescription)
         }
@@ -74,6 +99,7 @@ class CoreDataHelper: NSObject {
     }
     
     func fetchFoodsFromSelectedCategory(foodCategoryId: Int16) -> [Food] {
+        let context = managedObjectContext()
         let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         var foods: [Food] = []
@@ -82,7 +108,7 @@ class CoreDataHelper: NSObject {
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
-            foods = try managedObjectContext().fetch(fetchRequest)
+            foods = try context.fetch(fetchRequest)
         } catch let error {
             print(error.localizedDescription)
         }
@@ -129,7 +155,7 @@ class CoreDataHelper: NSObject {
             } catch let error {
                 print(error.localizedDescription)
             }
-        } catch {
+        } catch let error {
             print(error.localizedDescription)
         }
     }
@@ -154,26 +180,6 @@ class CoreDataHelper: NSObject {
                 print(error.localizedDescription)
             }
         } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func saveNewFood(foodName: String, foodQuantity: Int16, foodQuantityType: String, foodShelfLife: Date,
-                     foodImageData: Data, foodCategoryId: Int16, fridgeViewModel: FridgeCollectionViewViewModelType) {
-        let context = managedObjectContext()
-        let food = Food(context: context)
-        
-        food.name = foodName.trimmingCharacters(in: .whitespacesAndNewlines).capitalized
-        food.quantity = foodQuantity
-        food.quantityType = foodQuantityType
-        food.foodCategoryId = foodCategoryId
-        food.shelfLife = foodShelfLife
-        food.isInTheFridgeNow = true
-        food.image = foodImageData
-        
-        do {
-            try context.save()
-        } catch let error {
             print(error.localizedDescription)
         }
     }
@@ -210,7 +216,7 @@ class CoreDataHelper: NSObject {
                 print(error.localizedDescription)
                 return nil
             }
-        } catch {
+        } catch let error {
             print(error.localizedDescription)
         }
         
@@ -236,7 +242,7 @@ class CoreDataHelper: NSObject {
         }
         return true
     }
-    
+
     private func managedObjectContext() -> NSManagedObjectContext {
         return (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }
