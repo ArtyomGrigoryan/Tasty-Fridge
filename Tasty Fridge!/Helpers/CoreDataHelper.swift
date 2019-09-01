@@ -33,6 +33,69 @@ class CoreDataHelper: NSObject {
         }
     }
     
+    func addFoodToFridge(foodName: String, foodQuantity: Int16, foodQuantityType: String, foodShelfLife: Date) {
+        let context = managedObjectContext()
+        let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
+        
+        fetchRequest.predicate = NSPredicate(format: "name == %@", foodName)
+        
+        do {
+            let selectedFood = try context.fetch(fetchRequest)[0]
+            
+            selectedFood.setValue(foodQuantityType, forKey: "quantityType")
+            selectedFood.setValue(foodShelfLife, forKey: "shelfLife")
+            selectedFood.setValue(foodQuantity, forKey: "quantity")
+            selectedFood.setValue(true, forKey: "isInTheFridgeNow")
+            
+            do {
+                try context.save()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func updateFood(oldFoodName: String, newFoodName: String, foodQuantity: Int16, foodQuantityType: String,
+                    foodCategoryId: Int16, foodShelfLife: Date, foodImageData: Data) -> Food? {
+        let context = managedObjectContext()
+        let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
+        
+        fetchRequest.predicate = NSPredicate(format: "name == %@", oldFoodName)
+        
+        do {
+            let selectedFood = try context.fetch(fetchRequest)[0]
+            
+            guard let image = UIImage(data: foodImageData) else { return nil }
+            guard let selectedFoodUIImage = UIImage(data: selectedFood.image!) else { return nil }
+            
+            selectedFood.setValue(newFoodName.trimmingCharacters(in: .whitespacesAndNewlines), forKey: "name")
+            selectedFood.setValue(foodQuantityType, forKey: "quantityType")
+            selectedFood.setValue(foodCategoryId, forKey: "foodCategoryId")
+            selectedFood.setValue(foodShelfLife, forKey: "shelfLife")
+            selectedFood.setValue(foodQuantity, forKey: "quantity")
+            selectedFood.setValue(true, forKey: "isInTheFridgeNow")
+            
+            if !image.isEqualToImage(image: selectedFoodUIImage) {
+                guard let imageData = image.jpeg(.lowest) else { return nil }
+                selectedFood.setValue(imageData, forKey: "image")
+            }
+            
+            do {
+                try context.save()
+                return selectedFood
+            } catch let error {
+                print(error.localizedDescription)
+                return nil
+            }
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        return nil
+    }
+    
     func fetchFoodsThatsInTheFridgeNow() -> [Food] {
         let context = managedObjectContext()
         let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
@@ -158,69 +221,6 @@ class CoreDataHelper: NSObject {
         } catch let error {
             print(error.localizedDescription)
         }
-    }
-    
-    func addFoodToFridge(foodName: String, foodQuantity: Int16, foodQuantityType: String, foodShelfLife: Date) {
-        let context = managedObjectContext()
-        let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
-        
-        fetchRequest.predicate = NSPredicate(format: "name == %@", foodName)
-        
-        do {
-            let selectedFood = try context.fetch(fetchRequest)[0]
-            
-            selectedFood.setValue(foodQuantityType, forKey: "quantityType")
-            selectedFood.setValue(foodShelfLife, forKey: "shelfLife")
-            selectedFood.setValue(foodQuantity, forKey: "quantity")
-            selectedFood.setValue(true, forKey: "isInTheFridgeNow")
-            
-            do {
-                try context.save()
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func updateFood(oldFoodName: String, newFoodName: String, foodQuantity: Int16, foodQuantityType: String,
-                    foodCategoryId: Int16, foodShelfLife: Date, foodImageData: Data) -> Food? {
-        let context = managedObjectContext()
-        let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
-        
-        fetchRequest.predicate = NSPredicate(format: "name == %@", oldFoodName)
-        
-        do {
-            let selectedFood = try context.fetch(fetchRequest)[0]
-            
-            guard let image = UIImage(data: foodImageData) else { return nil }
-            guard let selectedFoodUIImage = UIImage(data: selectedFood.image!) else { return nil }
-            
-            selectedFood.setValue(newFoodName.trimmingCharacters(in: .whitespacesAndNewlines), forKey: "name")
-            selectedFood.setValue(foodQuantityType, forKey: "quantityType")
-            selectedFood.setValue(foodCategoryId, forKey: "foodCategoryId")
-            selectedFood.setValue(foodShelfLife, forKey: "shelfLife")
-            selectedFood.setValue(foodQuantity, forKey: "quantity")
-            selectedFood.setValue(true, forKey: "isInTheFridgeNow")
-            
-            if !image.isEqualToImage(image: selectedFoodUIImage) {
-                guard let imageData = image.jpeg(.lowest) else { return nil }
-                selectedFood.setValue(imageData, forKey: "image")
-            }
-            
-            do {
-                try context.save()
-                return selectedFood
-            } catch let error {
-                print(error.localizedDescription)
-                return nil
-            }
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        
-        return nil
     }
     
     func checkEqualFoodName(foodName: String) -> Bool {

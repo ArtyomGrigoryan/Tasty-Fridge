@@ -8,12 +8,6 @@
 
 import UIKit
 
-enum UIUserInterfaceIdiom: Int {
-    case Unspecified
-    case phone
-    case pad
-}
-
 struct ScreenSize {
     static let screenWidth = UIScreen.main.bounds.size.width
     static let screenHeight = UIScreen.main.bounds.size.height

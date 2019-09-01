@@ -16,20 +16,13 @@ class SearchFoodsTableViewViewModel: SearchFoodsTableViewViewModelType {
     private var selectedIndexPath: IndexPath?
     
     func foodViewModelForSelectedRow() -> FoodViewModelType? {
-        guard let selectedIndexPath = selectedIndexPath else { return nil }
-        
-        if let food = getFood(atIndexPath: selectedIndexPath) {
-            return FoodViewModel(foodModel: food)
-        }
-        
-        return nil
+        guard let selectedIndexPath = selectedIndexPath, let food = getFood(atIndexPath: selectedIndexPath) else { return nil }
+        return FoodViewModel(foodModel: food)
     }
     
     func cellViewModel(forRow row: String) -> FoodTableViewCellViewModelType? {
         let selectedFood = foods.first { $0.name == row }
-        
         guard let food = selectedFood else { return nil }
-        
         return FoodTableViewCellViewModel(foodModel: food)
     }
     

@@ -123,7 +123,7 @@ class EditFoodViewController: UIViewController {
         
         enableBarButton.bind(to: updateFoodBarButton.rx.isEnabled).disposed(by: self.disposeBag)
         
-        updateFoodBarButton.rx.tap.subscribe(onNext: { [weak self] _ in
+        updateFoodBarButton.rx.tap.subscribe(onNext: { [weak self] in
             guard
                 let self = self,
                 let foodCellDelegate = self.foodCellDelegate,
@@ -168,11 +168,11 @@ class EditFoodViewController: UIViewController {
     @objc func foodImageViewTapped(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "Источник фотографии", message: nil, preferredStyle: .actionSheet)
         
-        let cameraAction = UIAlertAction(title: "Камера", style: .default) { [weak self] (_) in
+        let cameraAction = UIAlertAction(title: "Камера", style: .default) { [weak self] _ in
             self?.chooseImagePickerAction(source: .camera)
         }
         
-        let photoLibAction = UIAlertAction(title: "Фото", style: .default) { [weak self] (_) in
+        let photoLibAction = UIAlertAction(title: "Фото", style: .default) { [weak self] _ in
             self?.chooseImagePickerAction(source: .photoLibrary)
         }
         

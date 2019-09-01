@@ -29,7 +29,7 @@ class TransitionManager: NSObject, UIViewControllerAnimatedTransitioning, UIView
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, options: .curveEaseInOut, animations: {
             fromView.layer.transform = CATransform3DMakeRotation(-.pi/2, 0, 1.0, 0)
-        }) { (_) in
+        }) { _ in
             transitionContext.completeTransition(true)
         }
     }

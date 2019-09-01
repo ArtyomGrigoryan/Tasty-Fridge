@@ -13,7 +13,7 @@ func getStringFromDate(foodDate: Date) -> String {
     formatter.dateStyle = DateFormatter.Style.medium
     formatter.timeStyle = DateFormatter.Style.none
     formatter.dateFormat = "dd.MM.yyyy"
-    formatter.timeZone = TimeZone(identifier: "GMT")
+    formatter.timeZone = TimeZone(abbreviation: "UTC")
     
     let stringFromDate = formatter.string(from: foodDate)
     
@@ -25,10 +25,9 @@ func getDateFromString(foodDate: String) -> Date {
     formatter.dateStyle = DateFormatter.Style.medium
     formatter.timeStyle = DateFormatter.Style.none
     formatter.dateFormat = "dd.MM.yyyy"
-    formatter.timeZone = TimeZone(identifier: "GMT")
-    
+    formatter.timeZone = TimeZone(abbreviation: "UTC")
     let dateFromString = formatter.date(from: foodDate)!
-    
+
     return dateFromString
 }
 
@@ -37,7 +36,7 @@ func getCurrentDateString() -> String {
     formatter.dateStyle = DateFormatter.Style.medium
     formatter.timeStyle = DateFormatter.Style.none
     formatter.dateFormat = "dd.MM.yyyy"
-    formatter.timeZone = TimeZone(identifier: "GMT")
+    formatter.timeZone = TimeZone(abbreviation: "UTC")
     
     let currentDate = formatter.string(from: Date())
     

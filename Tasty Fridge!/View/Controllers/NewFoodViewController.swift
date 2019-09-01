@@ -118,7 +118,7 @@ class NewFoodViewController: UIViewController {
         
         enableBarButton.bind(to: saveNewFoodBarButtonItem.rx.isEnabled).disposed(by: self.disposeBag)
         
-        saveNewFoodBarButtonItem.rx.tap.subscribe(onNext: { [weak self] _ in
+        saveNewFoodBarButtonItem.rx.tap.subscribe(onNext: { [weak self] in
             guard
                 let self = self,
                 let image = self.foodImageView.image,
