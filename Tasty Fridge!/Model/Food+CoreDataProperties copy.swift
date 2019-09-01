@@ -20,8 +20,8 @@ extension Food {
     @NSManaged public var name: String?
     @NSManaged public var image: Data?
     @NSManaged public var isInTheFridgeNow: Bool
-    @NSManaged public var quantity: Int16
-    @NSManaged public var foodCategoryId: Int16
+    @NSManaged public var quantity: Int32
+    @NSManaged public var foodCategoryId: Int32
     @NSManaged public var quantityType: String?
 
 }

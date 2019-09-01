@@ -73,5 +73,5 @@ class FoodCategoriesTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func unwindFromNewFood(segue:UIStoryboardSegue) {}
+    @IBAction func unwindFromNewFood(segue: UIStoryboardSegue) {}
 }

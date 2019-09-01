@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let foodCategoryDictionary = dictionary as! NSDictionary
                     let foodCategory = FoodCategory(context: backgroundContext)
                     
-                    foodCategory.id = foodCategoryDictionary["id"] as! Int16
+                    foodCategory.id = foodCategoryDictionary["id"] as! Int32
                     foodCategory.name = foodCategoryDictionary["name"] as? String
                 }
                 
@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     food.quantityType = foodDictionary["quantityType"] as? String
                     food.shelfLife = Date()
                     food.isInTheFridgeNow = false
-                    food.foodCategoryId = foodDictionary["foodCategoryId"] as! Int16
+                    food.foodCategoryId = foodDictionary["foodCategoryId"] as! Int32
                 }
                 do {
                     try backgroundContext.save()

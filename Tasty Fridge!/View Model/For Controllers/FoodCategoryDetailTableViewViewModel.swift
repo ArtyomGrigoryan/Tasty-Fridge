@@ -12,7 +12,7 @@ import RxCocoa
 class FoodCategoryDetailTableViewViewModel: FoodCategoryDetailTableViewViewModelType {
     let sectionListSubject = BehaviorSubject(value: [SectionOfFoods]())
     private var selectedIndexPath: IndexPath?
-    private let foodCategoryId: Int16
+    private let foodCategoryId: Int32
     
     func checkSelectedFoodForPresenceInTheFridge(indexPath: IndexPath?) -> String? {
         guard
@@ -69,7 +69,7 @@ class FoodCategoryDetailTableViewViewModel: FoodCategoryDetailTableViewViewModel
         }
     }
     
-    init(foodCategoryId: Int16) {
+    init(foodCategoryId: Int32) {
         self.foodCategoryId = foodCategoryId
         self.sectionListSubject.onNext(
             [SectionOfFoods(

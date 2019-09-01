@@ -186,23 +186,23 @@ class EditFoodViewController: UIViewController {
     }
     
     @objc func kbDidShow(notification: Notification) {
-        guard let userInfo = notification.userInfo, let activeField = activeField else { return }
+        guard
+            let activeField = activeField,
+            let userInfo = notification.userInfo,
+            let kbFrameSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        else { return }
         
-        let kbFrameSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbFrameSize.height, right: 0.0)
         
-        scrollView.isScrollEnabled = true
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
         scrollView.scrollRectToVisible(activeField.frame, animated: true)
+        scrollView.contentInsetAdjustmentBehavior = UIScrollView.ContentInsetAdjustmentBehavior.never
     }
     
     @objc func kbDidHide(notification: Notification) {
-        let contentInsets = UIEdgeInsets.zero
-        
-        scrollView.isScrollEnabled = false
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
+        scrollView.contentInset = UIEdgeInsets.zero
+        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
     
     @objc func datePickerValueChanged(sender: UIDatePicker) {

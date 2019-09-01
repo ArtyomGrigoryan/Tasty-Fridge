@@ -22,10 +22,10 @@ class FoodViewModel: FoodViewModelType {
     private let notification = NotificationService()
     
     func saveNewFood(fridgeViewModel: FridgeCollectionViewViewModelType, foodImageData: Data) {
-        CoreDataHelper.sharedInstance.saveNewFood(foodName: foodName.value!, foodQuantity: Int16(foodQuantity.value!)!,
+        CoreDataHelper.sharedInstance.saveNewFood(foodName: foodName.value!, foodQuantity: Int32(foodQuantity.value!)!,
                                                   foodQuantityType: foodQuantityType.value!,
                                                   foodShelfLife: getDateFromString(foodDate: foodShelfLife.value!),
-                                                  foodImageData: foodImageData, foodCategoryId: Int16(foodCategoryId.value!)!)
+                                                  foodImageData: foodImageData, foodCategoryId: Int32(foodCategoryId.value!)!)
         
         notification.scheduleNotification(foodShelfLife: getDateFromString(foodDate: foodShelfLife.value!), foodName: foodName.value!)
         
@@ -34,7 +34,7 @@ class FoodViewModel: FoodViewModelType {
     
     func addFoodToFridge(fridgeViewModel: FridgeCollectionViewViewModelType) {
         CoreDataHelper.sharedInstance.addFoodToFridge(foodName: foodName.value!,
-                                                      foodQuantity: Int16(foodQuantity.value!)!,
+                                                      foodQuantity: Int32(foodQuantity.value!)!,
                                                       foodQuantityType: foodQuantityType.value!,
                                                       foodShelfLife: getDateFromString(foodDate: foodShelfLife.value!))
         
@@ -46,9 +46,9 @@ class FoodViewModel: FoodViewModelType {
     func updateFood(oldFoodName: String, foodImageData: Data) {
         newFoodModel = CoreDataHelper.sharedInstance.updateFood(oldFoodName: oldFoodName,
                                                                 newFoodName: foodName.value!,
-                                                                foodQuantity: Int16(foodQuantity.value!)!,
+                                                                foodQuantity: Int32(foodQuantity.value!)!,
                                                                 foodQuantityType: foodQuantityType.value!,
-                                                                foodCategoryId: Int16(foodCategoryId.value!)!,
+                                                                foodCategoryId: Int32(foodCategoryId.value!)!,
                                                                 foodShelfLife: getDateFromString(foodDate: foodShelfLife.value!),
                                                                 foodImageData: foodImageData)
         

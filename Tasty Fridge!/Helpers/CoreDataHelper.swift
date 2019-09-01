@@ -14,7 +14,7 @@ class CoreDataHelper: NSObject {
     
     private override init() {}
     
-    func saveNewFood(foodName: String, foodQuantity: Int16, foodQuantityType: String, foodShelfLife: Date, foodImageData: Data, foodCategoryId: Int16) {
+    func saveNewFood(foodName: String, foodQuantity: Int32, foodQuantityType: String, foodShelfLife: Date, foodImageData: Data, foodCategoryId: Int32) {
         let context = managedObjectContext()
         let food = Food(context: context)
 
@@ -33,7 +33,7 @@ class CoreDataHelper: NSObject {
         }
     }
     
-    func addFoodToFridge(foodName: String, foodQuantity: Int16, foodQuantityType: String, foodShelfLife: Date) {
+    func addFoodToFridge(foodName: String, foodQuantity: Int32, foodQuantityType: String, foodShelfLife: Date) {
         let context = managedObjectContext()
         let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
         
@@ -57,8 +57,8 @@ class CoreDataHelper: NSObject {
         }
     }
     
-    func updateFood(oldFoodName: String, newFoodName: String, foodQuantity: Int16, foodQuantityType: String,
-                    foodCategoryId: Int16, foodShelfLife: Date, foodImageData: Data) -> Food? {
+    func updateFood(oldFoodName: String, newFoodName: String, foodQuantity: Int32, foodQuantityType: String,
+                    foodCategoryId: Int32, foodShelfLife: Date, foodImageData: Data) -> Food? {
         let context = managedObjectContext()
         let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
         
@@ -114,7 +114,7 @@ class CoreDataHelper: NSObject {
         return foods
     }
     
-    func getFoodCategoryName(foodCategoryId: Int16) -> String? {
+    func getFoodCategoryName(foodCategoryId: Int32) -> String? {
         let context = managedObjectContext()
         let fetchRequest: NSFetchRequest<FoodCategory> = FoodCategory.fetchRequest()
         
@@ -161,7 +161,7 @@ class CoreDataHelper: NSObject {
         return foodCategories
     }
     
-    func fetchFoodsFromSelectedCategory(foodCategoryId: Int16) -> [Food] {
+    func fetchFoodsFromSelectedCategory(foodCategoryId: Int32) -> [Food] {
         let context = managedObjectContext()
         let fetchRequest: NSFetchRequest<Food> = Food.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)

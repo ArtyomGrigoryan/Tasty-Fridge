@@ -26,8 +26,8 @@ class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         calendar.timeZone = TimeZone(abbreviation: "UTC")!
         
         var components = calendar.dateComponents([.year, .month, .day], from: foodShelfLife)
-        components.hour = 14
-        components.minute = 14
+        components.hour = 11
+        components.minute = 00
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
