@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         preloadData()
+        customizeNavigationBar()
         notificationService.requestAuthorization()
         notificationService.notificationCenter.delegate = notificationService
         
@@ -30,6 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         self.saveContext()
+    }
+    
+    // MARK: - Customize UI
+    
+    func customizeNavigationBar() {
+        UINavigationBar.appearance().barTintColor = #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9490196078, alpha: 1)
+        UINavigationBar.appearance().tintColor = .black
     }
     
     // MARK: - Core Data stack
