@@ -145,10 +145,13 @@ class EditFoodViewController: UIViewController {
             
             if oldFoodName == foodViewModel.foodName.value! {
                 foodCellDelegate.updateFoodCell(foodShelfLife: getDateFromString(foodDate: foodViewModel.foodShelfLife.value!),
-                                                foodName: nil, foodImageData: imageData)
+                                                foodName: nil, foodImageData: imageData, foodQuantity: foodViewModel.foodQuantity.value!,
+                                                foodQuantityType: foodViewModel.foodQuantityType.value!)
             } else {
                 foodCellDelegate.updateFoodCell(foodShelfLife: getDateFromString(foodDate: foodViewModel.foodShelfLife.value!),
-                                                foodName: foodViewModel.foodName.value!, foodImageData: imageData)
+                                                foodName: foodViewModel.foodName.value!, foodImageData: imageData,
+                                                foodQuantity: foodViewModel.foodQuantity.value!,
+                                                foodQuantityType: foodViewModel.foodQuantityType.value!)
             }
             
             foodPopOverDelegate.updateFoodDetailPopOverData(foodViewModel: foodViewModel.getUpdatedFoodViewModel())

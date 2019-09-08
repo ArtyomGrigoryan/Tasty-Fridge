@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B0696C623243E17007046F3 /* BudgeSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0696C523243E17007046F3 /* BudgeSwift.swift */; };
 		2B2E4473227B53130052B6A5 /* DeviceModelChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2E4472227B53130052B6A5 /* DeviceModelChecker.swift */; };
 		2B770F3F226F9B6300073FF4 /* refrigerator_door_open.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2B770F3E226F9B6300073FF4 /* refrigerator_door_open.mp3 */; };
 		2B7ECC81226CC38500924D2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7ECC80226CC38500924D2E /* AppDelegate.swift */; };
@@ -62,6 +63,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B0696C523243E17007046F3 /* BudgeSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeSwift.swift; sourceTree = "<group>"; };
 		2B2E4472227B53130052B6A5 /* DeviceModelChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModelChecker.swift; sourceTree = "<group>"; };
 		2B770F3E226F9B6300073FF4 /* refrigerator_door_open.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = refrigerator_door_open.mp3; sourceTree = "<group>"; };
 		2B7ECC7D226CC38500924D2E /* Tasty Fridge!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tasty Fridge!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				2B7ECC9B226CC7FF00924D2E /* Extensions.swift */,
+				2B0696C523243E17007046F3 /* BudgeSwift.swift */,
 				2B7ECC9D226CC81F00924D2E /* TextValidator.swift */,
 				2B7ECC9F226CC84100924D2E /* DateFunctions.swift */,
 				2B7ECCA1226CC87000924D2E /* CoreDataHelper.swift */,
@@ -468,6 +471,7 @@
 				2B7ECCCD226CCD9200924D2E /* SearchFoodsTableViewViewModelType.swift in Sources */,
 				2B7ECCF4226CD14500924D2E /* FoodCategoryDetailTableViewViewModel.swift in Sources */,
 				2B7ECCC5226CCB6300924D2E /* FoodCategoriesTableViewViewModelType.swift in Sources */,
+				2B0696C623243E17007046F3 /* BudgeSwift.swift in Sources */,
 				2B7ECCBF226CCB0900924D2E /* FridgeCollectionViewViewModelType.swift in Sources */,
 				2B7ECCAE226CC90F00924D2E /* Food+CoreDataClass copy.swift in Sources */,
 				2B7ECC9C226CC7FF00924D2E /* Extensions.swift in Sources */,

@@ -9,5 +9,5 @@
 import UIKit
 
 protocol UpdateFoodCellDelegate {
-    func updateFoodCell(foodShelfLife: Date, foodName: String?, foodImageData: Data?)
+    func updateFoodCell(foodShelfLife: Date, foodName: String?, foodImageData: Data?, foodQuantity: String?, foodQuantityType: String?)
 }

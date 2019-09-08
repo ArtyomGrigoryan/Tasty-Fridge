@@ -73,12 +73,50 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gkc-Ep-hQQ" customClass="BadgeSwift" customModule="Tasty_Fridge_" customModuleProvider="target">
+                                            <rect key="frame" x="49.5" y="0.0" width="20.5" height="21"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="badgeColor">
+                                                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="shadowColorBadge">
+                                                    <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="7"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadiusBadge">
+                                                    <integer key="value" value="0"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacityBadge">
+                                                    <integer key="value" value="0"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="2"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="size" keyPath="insets">
+                                                    <size key="value" width="2" height="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
                                     </subviews>
                                 </view>
                                 <constraints>
                                     <constraint firstItem="nq6-ME-Uqf" firstAttribute="leading" secondItem="z1O-ya-syc" secondAttribute="leading" id="1GH-yV-nss"/>
+                                    <constraint firstItem="DrJ-cA-a33" firstAttribute="top" secondItem="Gkc-Ep-hQQ" secondAttribute="bottom" constant="49" id="C2E-QX-2bZ"/>
+                                    <constraint firstItem="Gkc-Ep-hQQ" firstAttribute="top" secondItem="z1O-ya-syc" secondAttribute="top" id="CMl-gv-Tqu"/>
+                                    <constraint firstItem="Gkc-Ep-hQQ" firstAttribute="leading" relation="lessThanOrEqual" secondItem="z1O-ya-syc" secondAttribute="leading" constant="62" id="QTP-aL-zI4"/>
                                     <constraint firstItem="DrJ-cA-a33" firstAttribute="top" secondItem="nq6-ME-Uqf" secondAttribute="bottom" id="fgb-Km-fkJ"/>
                                     <constraint firstAttribute="bottom" secondItem="DrJ-cA-a33" secondAttribute="bottom" id="iER-sv-AMc"/>
+                                    <constraint firstAttribute="trailing" secondItem="Gkc-Ep-hQQ" secondAttribute="trailing" id="lUo-G9-a2m"/>
                                     <constraint firstItem="DrJ-cA-a33" firstAttribute="leading" secondItem="z1O-ya-syc" secondAttribute="leading" id="lzu-PC-XM2"/>
                                     <constraint firstAttribute="trailing" secondItem="DrJ-cA-a33" secondAttribute="trailing" id="qQW-AT-dYS"/>
                                     <constraint firstAttribute="trailing" secondItem="nq6-ME-Uqf" secondAttribute="trailing" id="shK-Zt-MPe"/>
@@ -87,6 +125,7 @@
                                 <connections>
                                     <outlet property="foodImageView" destination="nq6-ME-Uqf" id="i33-f1-27g"/>
                                     <outlet property="foodNameTextLabel" destination="DrJ-cA-a33" id="JWq-it-xB3"/>
+                                    <outlet property="foodQuantityBadgeLabel" destination="Gkc-Ep-hQQ" id="bDI-YM-kQA"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
