@@ -11,12 +11,13 @@ import RxCocoa
 import Foundation
 
 class FridgeCollectionViewViewModel: FridgeCollectionViewViewModelType {
+
     let sectionListSubject = BehaviorSubject(value: [SectionOfFoods]())
     
     func cellViewModel(atIndexPath indexPath: IndexPath) -> FoodViewModelType? {
         guard let sections = try? sectionListSubject.value() else { return nil }
         
-        var currentSection = sections[indexPath.section]
+        let currentSection = sections[indexPath.section]
         
         let food = currentSection.items[indexPath.row]
         
@@ -32,6 +33,18 @@ class FridgeCollectionViewViewModel: FridgeCollectionViewViewModelType {
         
         CoreDataHelper.sharedInstance.removeFoodFromFridge(foodName: food.name!)
         
+        currentSection.items.remove(at: indexPath.row)
+        
+        sections[indexPath.section] = currentSection
+        
+        sectionListSubject.onNext(sections)
+    }
+    
+    func updateFoodsPositionsInFridge(forIndexPath indexPath: IndexPath) {
+        guard var sections = try? sectionListSubject.value() else { return }
+        
+        var currentSection = sections[indexPath.section]
+                        
         currentSection.items.remove(at: indexPath.row)
         
         sections[indexPath.section] = currentSection

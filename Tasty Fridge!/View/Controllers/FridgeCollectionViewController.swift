@@ -12,18 +12,19 @@ import RxCocoa
 import RxDataSources
 
 class FridgeCollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate {
+    
     private var fridgeViewModel: FridgeCollectionViewViewModelType?
+    private var flag = false
     private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         fridgeViewModel = FridgeCollectionViewViewModel()
         
         guard let fridgeViewModel = fridgeViewModel else { return }
         let dataSource = createDataSource()
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(removeFoodFromFridge))
-        
+
         lpgr.minimumPressDuration = 0.4
         lpgr.delegate = self
         lpgr.delaysTouchesBegan = true
@@ -43,37 +44,78 @@ class FridgeCollectionViewController: UICollectionViewController, UIGestureRecog
                 let cell = self.collectionView.cellForItem(at: indexPath) as? FridgeCollectionViewCell
             else { return }
             
-            guard let foodDetailPopOverViewController = self.storyboard?.instantiateViewController(withIdentifier: "foodDetailPopOverViewController") as? FoodDetailPopOverViewController else { return }
-            foodDetailPopOverViewController.foodCellDelegate = cell
-            foodDetailPopOverViewController.modalPresentationStyle = .popover
-            foodDetailPopOverViewController.preferredContentSize = CGSize(width: 450, height: 110)
-            foodDetailPopOverViewController.foodViewModel = fridgeViewModel.cellViewModel(atIndexPath: indexPath)
-            
-            guard let popOverVC = foodDetailPopOverViewController.popoverPresentationController else { return }
-            popOverVC.delegate = self
-            popOverVC.sourceView = cell
-            popOverVC.sourceRect = cell.bounds
-            
-            self.present(foodDetailPopOverViewController, animated: true)
+            if false == self.flag {
+                guard let foodDetailPopOverViewController = self.storyboard?.instantiateViewController(withIdentifier: "foodDetailPopOverViewController") as? FoodDetailPopOverViewController else { return }
+                foodDetailPopOverViewController.foodCellDelegate = cell
+                foodDetailPopOverViewController.modalPresentationStyle = .popover
+                foodDetailPopOverViewController.preferredContentSize = CGSize(width: 450, height: 110)
+                foodDetailPopOverViewController.foodViewModel = fridgeViewModel.cellViewModel(atIndexPath: indexPath)
+                
+                guard let popOverVC = foodDetailPopOverViewController.popoverPresentationController else { return }
+                popOverVC.delegate = self
+                popOverVC.sourceView = cell
+                popOverVC.sourceRect = cell.bounds
+                
+                self.present(foodDetailPopOverViewController, animated: true)
+            } else {
+                cell.foodImageView.alpha = 1.0
+            }
         }).disposed(by: disposeBag)
+        /*
+        lng.rx.event.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            switch $0.state {
+            case .possible:
+                print("possible")
+            case .began:
+                guard let selectedIndexPath = self.collectionView.indexPathForItem(at: $0.location(in: self.collectionView)) else { break }
+                self.collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+            case .changed:
+                self.collectionView.updateInteractiveMovementTargetPosition($0.location(in: $0.view!))
+            case .ended:
+                self.collectionView.endInteractiveMovement()
+            case .cancelled:
+                self.collectionView.cancelInteractiveMovement()
+            case .failed:
+                 print("failed")
+            @unknown default:
+                print("default")
+            }
+        }).disposed(by: disposeBag)*/
     }
     
     func createDataSource() -> RxCollectionViewSectionedAnimatedDataSource<SectionOfFoods> {
         return RxCollectionViewSectionedAnimatedDataSource(
             animationConfiguration: AnimationConfiguration(insertAnimation: .automatic, reloadAnimation: .automatic, deleteAnimation: .left), configureCell:
-            { (_, collectionView, indexPath, food) in
+            { [weak self] (_, collectionView, indexPath, food) in
+                
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FridgeCollectionViewCell.cellIdentifier, for: indexPath) as? FridgeCollectionViewCell else { return UICollectionViewCell() }
                 cell.foodViewModel = FoodViewModel(foodModel: food)
+                
+                if false == self?.flag {
+                    cell.foodImageView.alpha = 1.0
+                } else {
+                    cell.foodImageView.alpha = 0.5
+                }
+                
                 return cell
             }
+//            canMoveItemAtIndexPath: { _, _ in
+//                return true
+//            }
         )
+    }
+    
+    @IBAction func bbiPressed(sender: Any) {
+        flag.toggle()
+        collectionView.reloadData()
     }
     
     @objc func removeFoodFromFridge(gesture: UILongPressGestureRecognizer!) {
         if gesture.state != .ended { return }
-        
+
         let point = gesture.location(in: collectionView)
-        
+
         if let indexPath = collectionView?.indexPathForItem(at: point) {
             guard let fridgeViewModel = fridgeViewModel else { return }
             fridgeViewModel.removeSelectedFoodFromFridge(forIndexPath: indexPath)

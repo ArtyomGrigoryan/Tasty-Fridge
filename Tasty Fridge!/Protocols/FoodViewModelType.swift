@@ -16,6 +16,7 @@ protocol FoodViewModelType: class {
     var foodShelfLife: BehaviorRelay<String?> { get }
     var foodCategoryId: BehaviorRelay<String?> { get }
     var foodQuantityType: BehaviorRelay<String?> { get }
+    
     func checkEqualFoodName() -> Bool
     func getUpdatedFoodViewModel() -> FoodViewModel
     func updateFood(oldFoodName: String, foodImageData: Data)

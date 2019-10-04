@@ -11,11 +11,10 @@ import AVFoundation
 
 class StartViewController: UIViewController {
     private let transitionManager = TransitionManager()
-    private var player: AVAudioPlayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
             guard let self = self else { return }
             self.performSegue(withIdentifier: "openFridgeDoorSegue", sender: self)
@@ -36,7 +35,7 @@ class StartViewController: UIViewController {
             try AVAudioSession.sharedInstance().setActive(true)
             
             do {
-                player = try AVAudioPlayer(contentsOf: url)
+                let player = try AVAudioPlayer(contentsOf: url)
                 player.play()
             }
             catch let error {
@@ -47,3 +46,4 @@ class StartViewController: UIViewController {
         }
     }
 }
+

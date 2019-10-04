@@ -23,11 +23,13 @@ class FridgeCollectionViewCell: UICollectionViewCell, UpdateFoodCellDelegate {
             
             foodViewModel.foodName.bind(to: foodNameTextLabel.rx.text).disposed(by: disposeBag)
             foodViewModel.foodImage.bind(to: foodImageView.rx.image).disposed(by: disposeBag)
+            //foodImageView.alpha = 0.5
             
             let foodShelfLife = getDateFromString(foodDate: foodViewModel.foodShelfLife.value!)
          
             updateFoodCell(foodShelfLife: foodShelfLife, foodName: nil, foodImageData: nil,
-                           foodQuantity: foodViewModel.foodQuantity.value, foodQuantityType: foodViewModel.foodQuantityType.value)
+                           foodQuantity: foodViewModel.foodQuantity.value,
+                           foodQuantityType: foodViewModel.foodQuantityType.value)
         }
     }
     
