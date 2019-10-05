@@ -72,6 +72,8 @@ class EditFoodViewController: UIViewController {
         foodNameTextField.delegate = self
         foodNameTextField.inputAccessoryView = toolbar
         foodNameTextField.setBottomBorder()
+        foodNameTextField.attributedPlaceholder = NSAttributedString(string: "наименование",
+                                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.officialApplePlaceholderGray])
         
         foodCategoryTextField.delegate = self
         foodCategoryTextField.inputAccessoryView = toolbar
@@ -82,10 +84,14 @@ class EditFoodViewController: UIViewController {
         foodShelfLifeTextField.inputView = datePicker
         foodShelfLifeTextField.inputAccessoryView = toolbar
         foodShelfLifeTextField.setBottomBorder()
+        foodShelfLifeTextField.attributedPlaceholder = NSAttributedString(string: "срок годности",
+                                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor.officialApplePlaceholderGray])
         
         foodQuantityTextField.delegate = self
         foodQuantityTextField.inputAccessoryView = toolbar
         foodQuantityTextField.setBottomBorder()
+        foodQuantityTextField.attributedPlaceholder = NSAttributedString(string: "количество",
+                                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.officialApplePlaceholderGray])
         
         foodQuantityTypeTextField.delegate = self
         foodQuantityTypeTextField.inputAccessoryView = toolbar

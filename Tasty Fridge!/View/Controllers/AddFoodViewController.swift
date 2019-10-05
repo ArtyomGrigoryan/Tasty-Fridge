@@ -63,11 +63,15 @@ class AddFoodViewController: UIViewController {
         foodShelfLifeTextField.inputAccessoryView = toolbar
         foodShelfLifeTextField.setBottomBorder()
         foodShelfLifeTextField.font = setFontSize()
+        foodShelfLifeTextField.attributedPlaceholder = NSAttributedString(string: "срок годности",
+                                                                          attributes: [NSAttributedString.Key.foregroundColor: UIColor.officialApplePlaceholderGray])
         
         foodQuantityTextField.delegate = self
         foodQuantityTextField.inputAccessoryView = toolbar
         foodQuantityTextField.setBottomBorder()
         foodQuantityTextField.font = setFontSize()
+        foodQuantityTextField.attributedPlaceholder = NSAttributedString(string: "количество", attributes: [NSAttributedString.Key.foregroundColor:
+                                                                            UIColor.officialApplePlaceholderGray])
         
         foodQuantityTypeTextField.delegate = self
         foodQuantityTypeTextField.inputAccessoryView = toolbar

@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func customizeNavigationBar() {
         UINavigationBar.appearance().barTintColor = #colorLiteral(red: 0.9254901961, green: 0.9411764706, blue: 0.9490196078, alpha: 1)
         UINavigationBar.appearance().tintColor = .black
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.black]
     }
     
     // MARK: - Core Data stack

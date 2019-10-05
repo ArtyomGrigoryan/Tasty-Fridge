@@ -14,7 +14,7 @@ import RxDataSources
 class FridgeCollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate {
     
     private var fridgeViewModel: FridgeCollectionViewViewModelType?
-    private var flag = false
+    //private var flag = false
     private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
@@ -44,7 +44,7 @@ class FridgeCollectionViewController: UICollectionViewController, UIGestureRecog
                 let cell = self.collectionView.cellForItem(at: indexPath) as? FridgeCollectionViewCell
             else { return }
             
-            if false == self.flag {
+            //if false == self.flag {
                 guard let foodDetailPopOverViewController = self.storyboard?.instantiateViewController(withIdentifier: "foodDetailPopOverViewController") as? FoodDetailPopOverViewController else { return }
                 foodDetailPopOverViewController.foodCellDelegate = cell
                 foodDetailPopOverViewController.modalPresentationStyle = .popover
@@ -57,9 +57,9 @@ class FridgeCollectionViewController: UICollectionViewController, UIGestureRecog
                 popOverVC.sourceRect = cell.bounds
                 
                 self.present(foodDetailPopOverViewController, animated: true)
-            } else {
-                cell.foodImageView.alpha = 1.0
-            }
+//            } else {
+//                cell.foodImageView.alpha = 1.0
+//            }
         }).disposed(by: disposeBag)
         /*
         lng.rx.event.subscribe(onNext: { [weak self] in
@@ -87,16 +87,16 @@ class FridgeCollectionViewController: UICollectionViewController, UIGestureRecog
     func createDataSource() -> RxCollectionViewSectionedAnimatedDataSource<SectionOfFoods> {
         return RxCollectionViewSectionedAnimatedDataSource(
             animationConfiguration: AnimationConfiguration(insertAnimation: .automatic, reloadAnimation: .automatic, deleteAnimation: .left), configureCell:
-            { [weak self] (_, collectionView, indexPath, food) in
+            { (_, collectionView, indexPath, food) in
                 
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FridgeCollectionViewCell.cellIdentifier, for: indexPath) as? FridgeCollectionViewCell else { return UICollectionViewCell() }
                 cell.foodViewModel = FoodViewModel(foodModel: food)
                 
-                if false == self?.flag {
-                    cell.foodImageView.alpha = 1.0
-                } else {
-                    cell.foodImageView.alpha = 0.5
-                }
+//                if false == self?.flag {
+//                    cell.foodImageView.alpha = 1.0
+//                } else {
+//                    cell.foodImageView.alpha = 0.5
+//                }
                 
                 return cell
             }
@@ -106,10 +106,10 @@ class FridgeCollectionViewController: UICollectionViewController, UIGestureRecog
         )
     }
     
-    @IBAction func bbiPressed(sender: Any) {
-        flag.toggle()
-        collectionView.reloadData()
-    }
+//    @IBAction func bbiPressed(sender: Any) {
+//        flag.toggle()
+//        collectionView.reloadData()
+//    }
     
     @objc func removeFoodFromFridge(gesture: UILongPressGestureRecognizer!) {
         if gesture.state != .ended { return }
